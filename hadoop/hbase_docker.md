@@ -1,11 +1,6 @@
 # Apache HBASE on Docker containers
 
 
-![Hbase](images/hbase_logo_with_orca_large-300x77.png)
-
-
-![Docker](images/docker.png)
-
 <!-- wp:heading {"level":3} -->
 <h3>Overview</h3>
 <!-- /wp:heading -->

@@ -36,4 +36,9 @@ Your Pages site will use the layout and styles from the Jekyll theme you have se
 
 Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
 
+## Python
 [Parallel processing (Pandas example)](python/pandas_parallel.md)
+[Python, Pandas, SQLAlchemy, SQL Server and Docker](python/python_pandas_sqlalchemy_sqlserver_docker.md)
+[Deterministic in Python (lru_cache) for function optimisation](python/lru_cache.md)
+[Python file search for "unlucky" ones](python/file_search.md)
+[Pascal's Triangle in Python](python/pascal.md)

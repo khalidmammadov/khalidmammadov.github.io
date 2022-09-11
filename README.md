@@ -20,6 +20,8 @@ Occasionally, I write here about tech interests me and experiments
 
 [Apache Hive in action](hadoop/hive.md)
 
+[Apache Pig with examples](hadoop/pig.md)
+
 [Apache HBASE on Docker containers](hadoop/hbase_docker.md)
 
 [Setting up Single node HADOOP on docker container](hadoop/hadoop_single_node.md)

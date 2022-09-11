@@ -42,3 +42,4 @@ Having trouble with Pages? Check out our [documentation](https://docs.github.com
 [Deterministic in Python (lru_cache) for function optimisation](python/lru_cache.md)
 [Python file search for "unlucky" ones](python/file_search.md)
 [Pascal's Triangle in Python](python/pascal.md)
+[Apache HBASE on Docker containers](hadoop/hbase_docker.md)

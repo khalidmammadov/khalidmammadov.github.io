@@ -4,7 +4,7 @@
 
 NOTE: I have not included hadoop instalation file as it big (too big for image rebuilds). But you can download it from Apache web site.
 
-Dowload and save hadoop to the same folder (e.g. hadoop-2.8.2.tar.gz).
+Download and save hadoop to the same folder (e.g. hadoop-2.8.2.tar.gz).
 
 I am using 2.8.2 version but feel free to download the other version and don't forget to update Dockerfile respectevely.
 

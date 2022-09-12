@@ -2,8 +2,7 @@
 
 In this article I will put together MapReduce program that scans data in HDFS file system and make data analysis. For this I have selected freely available data from
 
-[https://github.com/datasets/exchange-rates
-]()
+[https://github.com/datasets/exchange-rates]()
 GitHub repository. This data set have all historic FX rates for many countries.
 
 There are tree files in data folder :

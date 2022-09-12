@@ -2,6 +2,9 @@
 
 Occasionally, I write here about tech interests me and experiments 
 
+## Spark
+[Building latest (SNAPSHOT) Spark and running on Standalone Docker Cluster](spark/docker_stanalone_cluster.md)
+
 ## Python
 [Parallel processing (Pandas example)](python/pandas_parallel.md)
 

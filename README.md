@@ -3,6 +3,8 @@
 Occasionally, I write here about tech interests me and experiments 
 
 ## Spark
+[Spark DataFrameWriterV2 example using Sqlite (Scala)](spark/dataframewriter_v2.md)
+
 [Building latest (SNAPSHOT) Spark and running on Standalone Docker Cluster](spark/docker_stanalone_cluster.md)
 
 ## Python

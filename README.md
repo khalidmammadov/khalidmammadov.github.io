@@ -20,7 +20,7 @@ Occasionally, I write here about tech interests me and experiments
 
 [Python file search for "unlucky" ones](python/file_search.md)
 
-## Hadoop
+## Hadoop (old)
 [Building Inverted Index with Hadoop MapReduce (for a search engine)](hadoop/inverted_index.md)
 
 [Finding Min and Max FX Rates for every country using Hadoop MapReduce](hadoop/min_max.md)

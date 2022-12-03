@@ -3,15 +3,15 @@
 Occasionally, you may need to run some code on various Spark events, such as 
 doing some extra steps on Spark startup (e.g. creating a Spark GlobalTempViews or collect some adhoc stats)
 
-This article explains on example how we can one can hook up some additional actions to Spark.
+This article explains on example how one can hook up some additional actions to Spark.
 I am going to create a simple hook that is listening to spark Application start up and shutdown 
 events and logs respective times to a log file in /tmp location.
 
-_Note: The is written in Scala but can be used in conjunction with Python as well as it only 
-requires setting up one config and jar file as explained below in Scala example_
+_Note: The is written in Scala but can be used in conjunction with Python as well. It only 
+requires setting up one config and jar file as explained in below Scala example_
 
 _Note: Databricks users can copy below explained jar to **databricks/jars** folder in **dbfs**
-and add relevant config in teh cluster configuration_
+and add relevant config in the cluster configuration_
 
 ## Requirements
 - java (I am using classic v8 here)
@@ -148,7 +148,7 @@ second config adds our jar to classpath
 ```shell
 ./spark/bin/spark-shell --conf spark.extraListeners=AdHocListener --conf spark.driver.extraClassPath=extrajars/sparkhook_2.12-0.1.0-SNAPSHOT.jar
 ```
-when we run it should emit standard messages and one extra which is the app name (Spark shell):
+when we run, it should emit standard messages and one extra which is the app name (Spark shell):
 ```shell
 Setting default log level to "WARN".
 To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
@@ -198,7 +198,7 @@ Spark Pi stopped at 2022-12-03T21:50:57.537
 # Summary
 This simple example explains how one can easily add hooks to Spark code 
 to do various actions and each event provides relevant variables to use in the action.
-Although, in this example I am using *--conf spark.driver.extraClassPath* to add jar you can also
+Although, in this example I am using *--conf spark.driver.extraClassPath* to add jar but you can also
 add it into Spark's classpath whichever you like such as adding during your docker image build. Then 
-you won't need to specify this parameter and it will work for all apps! 
+you won't need to specify this parameter, and it will work for all apps! 
 

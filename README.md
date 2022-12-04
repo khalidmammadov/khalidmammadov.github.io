@@ -1,6 +1,6 @@
 ## PASSIONATE ABOUT BIGDATA, DATA PROCESSING, OPTIMISATION, AUTOMATION
 
-Occasionally, I write here about tech interests me and experiments 
+Occasionally, I write here about tech and experiments 
 
 ## Apache Spark
 

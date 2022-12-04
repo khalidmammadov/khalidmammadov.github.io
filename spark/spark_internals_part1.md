@@ -59,7 +59,7 @@ See below my illustration of these steps and relationships:
 
 It is important to note that the first three steps created MapPartitionsRDD instance and the last one ShuffledRDD. 
 These two groups are deliberate and creates distinction between these two types of steps within Spark framework. 
-They also define boundary where steps need to be split to create two Stages in the DAG 
+They define boundary where steps need to be split to create two Stages in the DAG 
 and usually referred as "Narrow" and "Wide" transformations. 
 - **Narrow**: means that those MapPartitionsRDD can be chained together to do required steps
 and can be done independently on each partition on a cluster node

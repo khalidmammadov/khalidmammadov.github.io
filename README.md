@@ -3,6 +3,9 @@
 Occasionally, I write here about tech interests me and experiments 
 
 ## Apache Spark
+
+[Apache Spark internals: RDD creation behind the scenes (part 1)](spark/spark_internals_part1.md)
+
 [Adding "hooks" to Apache Spark core to act on various Spark events (Scala)](spark/hooks.md)
 
 [Spark DataFrameWriterV2 example using Sqlite (Scala)](spark/dataframewriter_v2.md)

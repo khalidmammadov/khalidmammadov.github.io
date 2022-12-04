@@ -47,8 +47,8 @@ actual partitions will be computed when necessary (will be explained in later se
 - **flatmap**: This one uses RDD class' flatMap() function that captures the lambda we supply i.e. _.split(" ").
 This function is saved in the newly created MapPartitions instance that also has link as a parent to previous MapPartitions
 RDD.
-- mapped: This is very similar to **flatmap** step and creates MapPartitionsRDD and captures the given lambda function.
-- reduced: At this phase our previous RDD is enriched with additional RDD functions using implicit **PairRDDFunction**
+- **mapped**: This is very similar to **flatmap** step and creates MapPartitionsRDD and captures the given lambda function.
+- **reduced**: At this phase our previous RDD is enriched with additional RDD functions using implicit **PairRDDFunction**
 to get this **reduceByKey** method that is using generic **combineByKeyWithClassTag** method to create ShuffleRDD
 instance with an aggregator. An aggregator is container that holds functions for data reduction for the given RDD
 with functions like "given the values then combine" and "how to create a starting combiner".
@@ -70,9 +70,9 @@ Each of these stages will receive one part of the RDD i.e. a data partition to w
 from shuffle phase which is done using in combination with ShuffleDependency class and ShuffleMapStage.
 
 Furthermore, actual implementation of these two stages are a bit different though:
-- Stage 0: This is implemented/represented internally in DAG as **ShuffleMapStage**. Which means that partitions in this stage must be computed based on functions
+- **Stage 0**: This is implemented/represented internally in DAG as **ShuffleMapStage**. Which means that partitions in this stage must be computed based on functions
 defined on MapPartitionsRDD and then made ready for shuffle
-- Stage 1: This is implemented/represented internally in DAG as **ResultStage**. And means that data this is a final stage 
+- **Stage 1**: This is implemented/represented internally in DAG as **ResultStage**. And means that data this is a final stage 
 and data can be collected to combined and produce the result and can be returned to user.
 
 Below picture depicts these two stages. Also, image on the right shows the same but taken from Spark UI. 

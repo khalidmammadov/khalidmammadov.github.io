@@ -94,6 +94,24 @@ data. And this incurs cost as we ship more data we actually need for our result.
 The second example more efficient as it filter unnecessary values first and reduces network traffic and processing power
 needed and achieves better performance.
 
+# Collect
+
+When we call **collect** method, at this point we ask SparkContext to start handling from now on. 
+We call series of **runJob** job methods on it and each of which defines various phases of partition transformation.
+Following image depicts these steps and it's explained below:
+- First runJob is handling final product and says how an iterable must be handled and in this case simply converted 
+to relevant type. Also, it gathers result (with will be Array of Arrays) to a final flattened Array to return to user.
+- This time we create a closure with previous function and a new function that is going to handle a result from a task
+which contains one partition. 
+- The thirst steps creates another closure but this time we define an Array that holds results for each partition
+and hence got partition size and will be included as closure as said. So, we will run previous func for each partition
+and result will be stored in this array. This function becomes a "resultHandler".
+- At this point we are ready to pass our rdd, partitions, func and resultHandler to DAG scheduler for further processing
+
+![Collect](../images/RDDCollect.jpg)
+
+
+
 # Summary
 I will go further in the next series to show how these are converted into tasks and 
 distributed to cluster.

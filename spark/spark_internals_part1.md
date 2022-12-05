@@ -32,7 +32,7 @@ val reduced = mapped.reduceByKey(_+_)
 reduced.collect()
 ```
 
-## Explanation
+## RDD creation step by step
 There is nothing special first three lines of the code as it's classic Scala/Java code. Then we create 
 Spark configuration and set our cluster to local mode via **setMaster** and set app name.
 
@@ -104,7 +104,7 @@ data. And this incurs cost as we ship more data we actually need for our result.
 The second example more efficient as it filter unnecessary values first and reduces network traffic and processing power
 needed and achieves better performance.
 
-# Collect
+# Collect phase
 
 When we call **collect** method, at this point we ask SparkContext to start handling from now on. 
 We call series of **runJob** job methods on it and each of which defines various phases of partition transformation.

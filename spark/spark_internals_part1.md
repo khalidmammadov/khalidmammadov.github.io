@@ -57,7 +57,7 @@ See below my illustration of these steps and relationships:
 
 ![RDD](../images/RDDmap.jpg)
 
-It is important to note that the first three steps created MapPartitionsRDD instance and the last one ShuffledRDD. 
+In above picture, it is important to note that the first three steps created MapPartitionsRDD instance and the last one ShuffledRDD. 
 These two groups are deliberate and creates distinction between these two types of steps within Spark framework. 
 They define boundary where steps need to be split to create two Stages in the DAG 
 and usually referred as "Narrow" and "Wide" transformations. 
@@ -68,6 +68,16 @@ to get final result to apply desired lambda function. Hence, ShuffleRDD brakes t
 
 Each of these stages will receive one part of the RDD i.e. a data partition to work on. Stage 1 will get partitions 
 from shuffle phase which is done using in combination with ShuffleDependency class and ShuffleMapStage.
+
+### Dependency
+
+RDD also defines dependencies between each other and type for them. So, for narrow transformations
+dependency defined as OneToOneDependency and for wide (shuffle) it is ShuffleDependency. This 
+information then dictates where split between transformation happen to become separate stages.
+
+![RDDDependency](../images/RDDDependency.jpg)
+
+### Stages
 
 Furthermore, actual implementation of these two stages are a bit different though:
 - **Stage 0**: This is implemented/represented internally in DAG as **ShuffleMapStage**. Which means that partitions in this stage must be computed based on functions

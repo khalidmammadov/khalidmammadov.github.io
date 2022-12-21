@@ -4,11 +4,13 @@ Occasionally, I write here about tech and experiments
 
 ## Apache Spark
 
-[Apache Spark internals: RDD creation behind the scenes and Shuffle in detail](spark/spark_internals_part1.md)
+[Apache Spark internals: Shuffle in detail](spark/spark_internals_shuffle.md)
 
-[Apache Spark Internals: Architecture in detail](spark/spark_internals_part2.md)
+[Apache Spark internals: RDD creation behind the scenes](spark/spark_internals_rdd.md)
 
-[Apache Spark internals: Apache Spark Internals: Executor launch orchestration](spark/spark_internals_part3.md)
+[Apache Spark Internals: Architecture and lifecycle](spark/spark_internals_arch.md)
+
+[Apache Spark Internals: Executor launch orchestration](spark/spark_internals_executor_launch.md)
 
 [Adding "hooks" to Apache Spark core to act on various Spark events (Scala)](spark/hooks.md)
 

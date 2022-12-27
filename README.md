@@ -4,6 +4,8 @@ Occasionally, I write here about tech and experiments
 
 ## Apache Spark
 
+[Apache Spark ML: Using Random Forest Classifier to predict MOT test results [Scala]](spark/spark_ml_random_forest_mot.md)
+
 [Apache Spark internals: Shuffle in detail](spark/spark_internals_shuffle.md)
 
 [Apache Spark internals: RDD creation behind the scenes](spark/spark_internals_rdd.md)

@@ -1,4 +1,4 @@
-# Apache Spark internals: RDD and Stage creation with Shuffle behind the scenes 
+# Apache Spark internals: Shuffle in detail 
 
 _Note: this is follow up from previous article [Apache Spark internals: RDD creation behind the scenes](spark/spark_internals_rdd.md)_
 

@@ -1,4 +1,4 @@
-# Apache Spark internals: RDD and Stage creation with Shuffle behind the scenes 
+# Apache Spark internals: RDD and Stage creation 
 
 In these "Spark internals" series I am describing how Spark manages our instructions 
 and converts them to actionable tasks that is distributed to a cluster and results are collected 

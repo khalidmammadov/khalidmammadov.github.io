@@ -1,24 +1,24 @@
 ## PASSIONATE ABOUT BIGDATA, DATA PROCESSING, OPTIMISATION, AUTOMATION
 
-Occasionally, I write here about tech and experiments 
+Occasionally, I write about technologies that interest me on this blog.  
 
 ## Apache Spark
 
 [Apache Spark ML: Using Random Forest Classifier to predict MOT test results [Scala]](spark/spark_ml_random_forest_mot.md)
-
-[Apache Spark internals: Shuffle in detail](spark/spark_internals_shuffle.md)
-
-[Apache Spark internals: RDD creation behind the scenes](spark/spark_internals_rdd.md)
-
-[Apache Spark Internals: Architecture and lifecycle](spark/spark_internals_arch.md)
-
-[Apache Spark Internals: Executor launch orchestration](spark/spark_internals_executor_launch.md)
 
 [Adding "hooks" to Apache Spark core to act on various Spark events (Scala)](spark/hooks.md)
 
 [Spark DataFrameWriterV2 example using Sqlite (Scala)](spark/dataframewriter_v2.md)
 
 [Building latest (SNAPSHOT) Spark and running on Standalone Docker Cluster](spark/docker_stanalone_cluster.md)
+
+[Apache Spark Internals: Executor launch orchestration](spark/spark_internals_executor_launch.md)
+
+[Apache Spark internals: Shuffle in detail](spark/spark_internals_shuffle.md)
+
+[Apache Spark internals: RDD creation behind the scenes](spark/spark_internals_rdd.md)
+
+[Apache Spark Internals: Architecture and lifecycle](spark/spark_internals_arch.md)
 
 ## Python
 [Parallel processing (Pandas example)](python/pandas_parallel.md)

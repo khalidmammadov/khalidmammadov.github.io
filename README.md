@@ -4,11 +4,13 @@ Occasionally, I write about technologies that interest me on this blog.
 
 ## Apache Spark
 
+[Apache Spark ML: Using Gradient Boost Classifier to predict MOT test results [Python]](spark/spark_ml_gradient_boost_mot.md)
+
 [Apache Spark ML: Using Random Forest Classifier to predict MOT test results [Scala]](spark/spark_ml_random_forest_mot.md)
 
-[Adding "hooks" to Apache Spark core to act on various Spark events (Scala)](spark/hooks.md)
+[Adding "hooks" to Apache Spark core to act on various Spark events [Scala]](spark/hooks.md)
 
-[Spark DataFrameWriterV2 example using Sqlite (Scala)](spark/dataframewriter_v2.md)
+[Spark DataFrameWriterV2 example using Sqlite [Scala]](spark/dataframewriter_v2.md)
 
 [Building latest (SNAPSHOT) Spark and running on Standalone Docker Cluster](spark/docker_stanalone_cluster.md)
 

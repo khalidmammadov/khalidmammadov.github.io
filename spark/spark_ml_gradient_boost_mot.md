@@ -1,7 +1,7 @@
-# Apache Spark ML: Using Random Forest Classifier to predict MOT test results [Scala]
+# Apache Spark ML: Using Gradient Boost Classifier to predict MOT test results [Python]
 
 In this article I am going to use Spark's ML functionality to do some predictions.
-The complete code sample can be found here [spark-ml-random-forest](https://github.com/khalidmammadov/scala/tree/main/spark-ml-random-forest)
+The complete code sample can be found here [spark_ml_gradient_boost](https://github.com/khalidmammadov/python_code/tree/master/spark_ml_gradient_boost)
 
 ### Objective
 The goal is to find if given particular car is going to pass MOT test or not.
@@ -36,8 +36,8 @@ As you can see data is in CSV format and it has got all the cars' details with r
 This data will be cleaned and some irrelevant column will be dropped like `test_id`.  
 
 ### Method
-Since this problem is `binary` classification problem I will use `decision tree classification` models and 
-in particular `Random Forest classifier` to do the actual job. I think it's well enough for given problem.
+This is `binary` classification problem and I'm going to use `Gradient boost classifier` to do the actual job. 
+I have used different classification algorithm in my other post, see [Spark ML Random Forest](spark/spark_ml_random_forest_mot.md) 
 
 ### Implementation
 I am using Apache Spark's ML libraries and ecosystem to create an ML model that can predict this results.
@@ -46,28 +46,23 @@ Ok, lets gets started.
 
 You can download complete source code of the model below:
 
-https://github.com/khalidmammadov/scala/blob/main/spark-ml-random-forest/src/main/scala/Main.scala
+https://github.com/khalidmammadov/python_code/blob/master/spark_ml_gradient_boost/spark_gradient_boost.py
 
-I am going to list part of the above code below and explain what each parts do.
+I am going to list part of the above code below and explain what each part do.
 
 First we import all necessary packages and classes. These will be explained in due course.
-Then code wrapped to a Scala object to be able to execute it as an application
-```commandline
-import org.apache.spark.ml.{Pipeline, PipelineModel}
-import org.apache.spark.ml.classification.{RandomForestClassificationModel, RandomForestClassifier}
-import org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator
-import org.apache.spark.ml.feature.{IndexToString, StringIndexer, StringIndexerModel, VectorAssembler, VectorIndexer}
-import org.apache.spark.sql.SparkSession
-import org.apache.spark.sql.functions.expr
-
-object Main {
-  def main(args: Array[String]): Unit = {
-  ...
+```Python
+from pyspark.ml import Pipeline, PipelineModel
+from pyspark.ml.classification import GBTClassifier
+from pyspark.ml.evaluation import MulticlassClassificationEvaluator
+from pyspark.ml.feature import IndexToString, StringIndexer, VectorAssembler, VectorIndexer
+from pyspark.sql import SparkSession
+from pyspark.sql.functions import expr, year, col
 ```
 
 We then instantiate a Spark session and set log level to ERROR to reduce logs during execution.
-```commandline
-val spark = SparkSession.builder.master("local[*]").appName("Predict MOT result").getOrCreate()
+```Python
+spark = SparkSession.builder.master("local[*]").appName("MOT Test result prediction").getOrCreate()
 spark.sparkContext.setLogLevel("ERROR")
 ```
 
@@ -76,15 +71,15 @@ do filtration and read data and so it would be better to save it as immutable Pa
 efficient to read and filter data and we are not intending to alter it anyway.
 
 So, this reads CSV files and does some simple transformations and saves the data as Parquet.
-```commandline
-val filesPath = "/home/user/download/dft_test_result_2020"
-val motData = spark.read.option("header", "true").csv(filesPath)
-motData
-  .withColumn("year", year('first_use_date))
-  .repartition('year, 'make, 'model)
-  .write
-  .format("parquet")
-  .saveAsTable("/home/user/motdata")
+```Python
+ source_files_path = "/home/user/download/dft_test_result_2020"
+    mot_data = spark.read.option("header", "true").csv(source_files_path)
+    (mot_data
+     .withColumn("year", year(col("first_use_date")))
+     .repartition(col("year"), col("make"), col("model"))
+     .write
+     .format("parquet")
+     .saveAsTable("/home/user/motdata"))
 ```
 
 _Disclaimer: I know this can be done as one step like checkpointing but I'll keep it as is for simplicity_
@@ -92,14 +87,11 @@ _Disclaimer: I know this can be done as one step like checkpointing but I'll kee
 Then it reads the same data as Parquet and filters only new tests. As cars can retake the test later again once they 
 fix the faults and pass the test. So, we are interested in the first test for a given year and to find out weather it passed 
 or not first time.
-```commandline
-val _data =
-      spark.read
-        .parquet("/home/user/motdata")
-        .filter(
-        """test_type = 'NT'
-            | and test_result in ('F', 'P')
-            |""".stripMargin)
+```Python
+df = (spark.read
+          .parquet("/home/user/motdata")
+          .filter("""test_type = 'NT'
+                       and test_result in ('F', 'P') """))
 ```
 
 ### Feature engineering 
@@ -111,19 +103,20 @@ size and my server that does not have enough capacity to handle it all. So, we w
 but with different milage, year, engine and fuel type.
 Here Ford Fiesta chosen due to popularity reasons and data size. It's one of the popular cars in UK!
 
-```commandline
-val data = _data
-  .drop("colour", "vehicle_id", "test_id", "test_date", "test_class_id", "test_type", "postcode_area", "first_use_date")
-  .withColumn("indexed_test_mileage", expr("int(test_mileage)"))
-  .withColumn("indexed_year", expr("int(year)"))
-  .withColumn("indexed_cylinder_capacity", expr("int(cylinder_capacity)"))
-  .filter("make = 'FORD'")
-  .filter("model = 'FIESTA'")
+```Python
+df = (df
+          .drop("colour", "vehicle_id", "test_id", "test_date", "test_class_id", "test_type", "postcode_area",
+                "first_use_date")
+          .withColumn("indexed_test_mileage", expr("int(test_mileage)"))
+          .withColumn("indexed_year", expr("int(year)"))
+          .withColumn("indexed_cylinder_capacity", expr("int(cylinder_capacity)"))
+          .filter("make = 'FORD'")
+          .filter("model = 'FIESTA'"))
 ```
 
 This is how data now looks like:
-```commandline
-data.show()
+```Python
+df.show()
 +-----------+------------+----+------+---------+-----------------+----+--------------------+------------+-------------------------+
 |test_result|test_mileage|make| model|fuel_type|cylinder_capacity|year|indexed_test_mileage|indexed_year|indexed_cylinder_capacity|
 +-----------+------------+----+------+---------+-----------------+----+--------------------+------------+-------------------------+
@@ -136,47 +129,35 @@ data.show()
 .....
 ```
 
-Now, we need to set our prediction column that we are trying to find out given the test sample. 
-So we `test_result` column that can have either `P` or `F` and since it's a string column we use StringIndexer class
-to convert them to a numeric values.
-```commandline
-val labelIndexer = new StringIndexer()
-      .setInputCol("test_result")
-      .setOutputCol("indexedTestResult")
-      .fit(data)
-```
-
 We declare which column in our source data are string and which columns we are going to use 
 as `features`.
-```commandline
-val stringCols = List("make", "model", "fuel_type")
-val featureCols = List("test_mileage", "fuel_type", "year", "cylinder_capacity")
+```Python
+string_cols = ["make", "model", "fuel_type"]
+feature_cols = ["test_mileage", "fuel_type", "year", "cylinder_capacity"]
 ```
 
-Here I use helper function getStringIndexer to create a StringIndexer instance given a column name.
+Here I use helper function `get_string_indexer` to create a StringIndexer instance given a column name.
 Then data is cleaner further to remove `nulls` and then all string columns are traversed to be converted 
 to numerical values using helper function.
-```commandline
-def getStringIndexer(col: String): StringIndexer = {
-  new StringIndexer()
-    .setInputCol(col)
-    .setOutputCol(s"indexed_$col")
-}
+```Python
+    def get_string_indexer(c) -> StringIndexer:
+        return (StringIndexer()
+                .setInputCol(c)
+                .setOutputCol(f"indexed_{c}"))
 
-val nullsFiltered =
-  featureCols
-    .foldLeft(data){case (df, c)=> df.filter(s"$c is not null")}
-    .localCheckpoint(true)
+    for _col in feature_cols:
+        df = df.filter(f"{_col} is not null")
 
-val convertedStringColsDf =
-  stringCols
-    .map(getStringIndexer)
-    .foldLeft(nullsFiltered){case(df, i)=>i.fit(df).transform(df)}
+    df = df.localCheckpoint(True)
+
+    for _col in string_cols:
+        indexer = get_string_indexer(_col)
+        df = indexer.fit(df).transform(df)
 ```
 
 Quick check how data looks like after transformations so far:
-```commandline
-onvertedStringColsDf.show()
+```Python
+df.show()
 +-----------+------------+----+------+---------+-----------------+----+--------------------+------------+-------------------------+------------+-------------+-----------------+
 |test_result|test_mileage|make| model|fuel_type|cylinder_capacity|year|indexed_test_mileage|indexed_year|indexed_cylinder_capacity|indexed_make|indexed_model|indexed_fuel_type|
 +-----------+------------+----+------+---------+-----------------+----+--------------------+------------+-------------------------+------------+-------------+-----------------+
@@ -194,20 +175,20 @@ As you can see we have got source columns and corresponding encoded numerical on
 Now, we need to collect these numerical columns into one column as a vector and VectorAssembler is here to help.
 I am also using Spark's DataFrame checkpointing feature to materialise lazy transformation and save them as Parquet files 
 locally for faster repeated reads. 
-```commandline
-    val featuresAssembler = new VectorAssembler()
-      .setInputCols(featureCols.map(c=>s"indexed_$c").toArray)
-      .setOutputCol("features")
+```Python
+    idx_feature_cols = [f"indexed_{c}" for c in feature_cols]
+    features_assembler = (VectorAssembler()
+                          .setInputCols(idx_feature_cols)
+                          .setOutputCol("features"))
 
-    val withFeaturesVectorDf =
-      featuresAssembler.
-        transform(convertedStringColsDf)
-        .drop(featureCols.map(c=>s"indexed_$c"): _*)
-        .localCheckpoint(true)
+    with_features_vector_df = (features_assembler
+                               .transform(df)
+                               .drop(*idx_feature_cols)
+                               .localCheckpoint(True))
 ```
 Quick check the result and as expected one column with all features bundled:
-```commandline
-withFeaturesVectorDf.show()
+```Python
+df.show()
 +-----------+------------+----+------+---------+-----------------+----+------------+-------------+--------------------+
 |test_result|test_mileage|make| model|fuel_type|cylinder_capacity|year|indexed_make|indexed_model|            features|
 +-----------+------------+----+------+---------+-----------------+----+------------+-------------+--------------------+
@@ -221,40 +202,49 @@ withFeaturesVectorDf.show()
 ```
 
 Then we need to set this `features` column as input data to our training model. 
-```commandline
-val featureIndexer = new VectorIndexer()
-  .setInputCol("features")
-  .setOutputCol("indexedFeatures")
-  .setMaxCategories(4)
-  .fit(withFeaturesVectorDf)
+```Python
+    feature_indexer = (VectorIndexer()
+                       .setInputCol("features")
+                       .setOutputCol("indexedFeatures")
+                       .setMaxCategories(4)
+                       .fit(with_features_vector_df))
 ```
 
 We then split data into two parts by 70% and 30% for training and testing purposes:
-```commandline
-val Array(trainingData, testData) = withFeaturesVectorDf.randomSplit(Array(0.7, 0.3))
+```Python
+(training_data, test_data) = with_features_vector_df.randomSplit([0.7, 0.3])
 ```
 
-Now, we create an instance of our RandomForestClassifier
-```commandline
-val rf = new RandomForestClassifier()
-  .setLabelCol("indexedTestResult")
-  .setFeaturesCol("indexedFeatures")
-  .setNumTrees(30)
-  .setMaxBins(50)
+Now, we create an instance of our GBTClassifier
+```Python
+gb = (GBTClassifier()
+          .setLabelCol("indexedTestResult")
+          .setFeaturesCol("indexedFeatures")
+          .setMaxIter(10)
+          .setFeatureSubsetStrategy("auto"))
+```
+
+Now, we need to set our prediction column that we are trying to find out given the test sample. 
+So we `test_result` column that can have either `P` or `F` and since it's a string column we use StringIndexer class
+to convert them to a numeric values.
+```Python
+label_indexer = (StringIndexer()
+                     .setInputCol("test_result")
+                     .setOutputCol("indexedTestResult")
+                     .fit(df))
 ```
 
 Also, create an object that will convert our predictions back to original values:
-```commandline
-val labelConverter = new IndexToString()
-  .setInputCol("prediction")
-  .setOutputCol("predictedTestResult")
-  .setLabels(labelIndexer.labelsArray(0))
+```Python
+label_converter = (IndexToString()
+                       .setInputCol("prediction")
+                       .setOutputCol("predictedTestResult")
+                       .setLabels(list(label_indexer.labelsArray[0])))
 ```
 
 Then we use `pipelines` to chain the transformations, training and converter as stages:
-```commandline
-val pipeline = new Pipeline()
-  .setStages(Array(labelIndexer, featureIndexer, rf, labelConverter))
+```Python
+pipeline = Pipeline().setStages([label_indexer, feature_indexer, gb, label_converter])
 ```
 
 ## Training
@@ -264,51 +254,50 @@ As you can imagine training process take long time and in order to save time for
 development we can save it into a location and load it as necessary. I am using a simple toggle `USE_SAVED_MODEL`
 in the code for simplicity 
 
-```commandline
-val USE_SAVED_MODEL = false
-val path = "/home/user/models/spark-rf/model"
-// Train model. This also runs the indexers.
-val model = if (USE_SAVED_MODEL) {
-  PipelineModel.load(path)
-}else {
-  val m = pipeline.fit(trainingData)
-  m.write.overwrite().save(path)
-  m
-}
+```Python
+use_saved_model = False
+    path = "/home/user/models/spark-rf/model"
+    # Train model. This also runs the indexers.
+    model: PipelineModel
+    if use_saved_model:
+        model = PipelineModel.load(path)
+    else:
+        model = pipeline.fit(training_data)
+        model.write().overwrite().save(path)
 ```
 
 ## Prediction
 We can now use our test data to make predictions using our trained model
 
-```commandline
-val predictions = model.transform(testData)
+```Python
+predictions = model.transform(test_data)
 ```
 
 We can then save predictions to a file and calculate accuracy of our model: 
-```commandline
-    val cols = List("predictedTestResult", "test_result") ++ featureCols
-    // predictions.selectExpr(cols: _*).show(1500)
-    predictions
-      .repartition(1)
-      .selectExpr(cols: _*)
-      .write
-      .mode("overwrite")
-      .csv("/tmp/output.csv")
+```Python
+cols = [*["predictedTestResult", "test_result"], *feature_cols]
+    # predictions.selectExpr(cols: _*).show(1500)
+    (predictions
+     .repartition(1)
+     .selectExpr(*cols)
+     .write
+     .mode("overwrite")
+     .csv("/tmp/output.csv"))
 
-    // Select (prediction, true label) and compute test error.
-    val evaluator = new MulticlassClassificationEvaluator()
-      .setLabelCol("indexedTestResult")
-      .setPredictionCol("prediction")
-      .setMetricName("accuracy")
-    val accuracy = evaluator.evaluate(predictions)
-    println(s"Test Accuracy = $accuracy")
-    println(s"Test Error = ${(1.0 - accuracy)}")
+    # Select (prediction, true label) and compute test error.
+    evaluator = (MulticlassClassificationEvaluator()
+                 .setLabelCol("indexedTestResult")
+                 .setPredictionCol("prediction")
+                 .setMetricName("accuracy"))
+    accuracy = evaluator.evaluate(predictions)
+    print(f"Test Accuracy = {accuracy}")
+    print(f"Test Error = {(1.0 - accuracy)}")
 ```
 
 Here is the output values in my tests:
-```commandline
-Test Accuracy = 0.7326978697853702
-Test Error = 0.2673021302146298
+```Python
+Test Accuracy = 0.7334723480442346
+Test Error = 0.26652765195576544
 ```
 
 ## Conclusion
@@ -320,7 +309,4 @@ in general there is a bias for MOT Pass, which makes sense as inherently people 
 car's state and fixed obvious issues. Another was the strong correlation between predicted and actual MOT test result 
 for one particular Ford Fiesta model with a milage above 120K and particular petrol engine!
 
-In later articles I will use this MOT data again using different classification models (perhaps
-`Gradient boosting machines`) and see if I am 
-going to get any better output given the same data. 
 

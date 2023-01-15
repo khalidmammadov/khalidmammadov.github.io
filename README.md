@@ -22,6 +22,10 @@ Occasionally, I write about technologies that interest me on this blog.
 
 [Apache Spark Internals: Architecture and lifecycle](spark/spark_internals_arch.md)
 
+## Apache Arrow
+
+[Loading Delta (Parquet) files into Apache Arrow](arrow/delta_load.md)
+
 ## Python
 [Parallel processing (Pandas example)](python/pandas_parallel.md)
 

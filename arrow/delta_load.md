@@ -9,7 +9,7 @@ dictates how underlying Parquet data must be accessed.
 In this respect, I would like to first show how we can load a Parquet files inside Delta table into the Arrow, 
 then load as Delta. Loading Delta as Parquet would yield incorrect results as I will demonstrate shortly.
 
-_You can download source code here: https://github.com/khalidmammadov/python_code/blob/master/arrow_delta/Delta_to_Arrow.ipynb_
+_You can download source code here: [Delta to Arrow Jupiter Notebook source](https://github.com/khalidmammadov/python_code/blob/master/arrow_delta/Delta_to_Arrow.ipynb)_
 
 ### Environment set up
 

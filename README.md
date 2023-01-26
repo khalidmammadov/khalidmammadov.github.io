@@ -2,6 +2,10 @@
 
 Occasionally, I write about technologies that interest me on this blog.  
 
+## GPU processing
+
+[Installing NVIDIA Tesla K80 GPU on a workstation for Deep Learning](gpu/k80_installation.md)
+
 ## Apache Spark
 
 [Apache Spark ML: Using Gradient Boost Classifier to predict MOT test results [Python]](spark/spark_ml_gradient_boost_mot.md)

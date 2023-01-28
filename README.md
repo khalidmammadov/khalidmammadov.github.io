@@ -8,7 +8,7 @@ Occasionally, I write about technologies that interest me on this blog.
 
 ## Apache Spark
 
-[check](spark/scale_up_prediction_model.ipynb)
+[Apache Spark Preemptive Auto-Scaling using Machine Learning](spark/spark_ml_auto_scale.md)
 
 [Apache Spark ML: Using Gradient Boost Classifier to predict MOT test results [Python]](spark/spark_ml_gradient_boost_mot.md)
 

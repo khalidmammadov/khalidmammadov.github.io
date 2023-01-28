@@ -15,7 +15,7 @@ can accurately predict cluster size that we can use to call an API (Rest API, do
 to scale the cluster up or down as needed.**
 
 Below layout is written in Jupiter notebook style and you can get actual notebook at this
-address : https://github.com/khalidmammadov/python_code/blob/master/ml_scale/scale_up_prediction_model.ipynb
+ [link](https://github.com/khalidmammadov/python_code/blob/master/ml_scale/scale_up_prediction_model.ipynb)
 
 ## Set up
 First import all required Python libraries

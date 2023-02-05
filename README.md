@@ -3,6 +3,7 @@
 Occasionally, I write about technologies that interest me on this blog.  
 
 ## GPU processing
+[Cloud Storage Ingestion Cost Estimation for Big Data using Monte Carlo Simulation over CUDA libraries and NVIDIA Tesla GPU](gpu/cost_analysis_cudf.md)
 
 [Installing NVIDIA Tesla K80 GPU on a workstation for Deep Learning](gpu/k80_installation.md)
 

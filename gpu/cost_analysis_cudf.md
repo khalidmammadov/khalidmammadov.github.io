@@ -145,7 +145,7 @@ def gen_data(mean, std_dev, count):
 
 # Monte Carlo
 years = 100000
-price_per_gb = 0.15214
+price_per_gb = 0.0231
 async def generate_sample_sum():
     rows = np.round(gen_data(mu, 50, days), 0)*1e9
     size_kb = gen_data(1, 0.5, days)

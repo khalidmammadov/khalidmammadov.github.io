@@ -9,7 +9,7 @@ Occasionally, I write about technologies that interest me on this blog.
 
 ## Apache Spark
 
-[Apache Spark Preemptive Auto-Scaling using Machine Learning](spark/spark_ml_auto_scale.md)
+[Running Spark on Kubernetes using spark-on-k8s-operator, CRDs and scheduling it from microservice [Java]](spark/spark_k8s_yaml_spring_boot.md)
 
 [Apache Spark ML: Using Gradient Boost Classifier to predict MOT test results [Python]](spark/spark_ml_gradient_boost_mot.md)
 

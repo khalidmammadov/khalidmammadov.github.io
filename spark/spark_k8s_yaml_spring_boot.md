@@ -1,5 +1,8 @@
 # Running Spark on Kubernetes using spark-on-k8s-operator, CRDs and scheduling it from microservice
 
+
+![k8s_yaml_main_diagram](../images/k8s_yaml_main_diagram.jpg)
+
 This article demonstrates how to run Apache Spark on Kubernetes using Custom Resource Definitions (CRDs). Here, I will show what needs to be done 
 to test it on your local machine and will create a demo Spring Boot based web app that shows how it's easy to 
 integrate and schedule Spark apps from your microservices.  

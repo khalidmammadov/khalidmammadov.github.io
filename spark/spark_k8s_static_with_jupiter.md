@@ -1,4 +1,4 @@
-# Apache Spark with Jupiter Notebooks on Kubernetes
+# Running Apache Spark and Jupiter Notebooks on Kubernetes with Helm Charts
 
 
 ![k8s_yaml_main_diagram](../images/jupiter_spark_k8s.jpg)

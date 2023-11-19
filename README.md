@@ -9,6 +9,8 @@ Occasionally, I write about technologies that interest me on this blog.
 
 ## Apache Spark
 
+[Running Apache Spark and Jupiter Notebooks on Kubernetes with Helm Charts](spark/spark_k8s_static_with_jupiter.md)
+
 [Running Spark on Kubernetes using spark-on-k8s-operator, CRDs and scheduling it from microservice [Java]](spark/spark_k8s_yaml_spring_boot.md)
 
 [Apache Spark ML: Using Gradient Boost Classifier to predict MOT test results [Python]](spark/spark_ml_gradient_boost_mot.md)
